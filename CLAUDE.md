@@ -120,9 +120,16 @@ Kandidater för spelformat (diskuterades men inget beslutades):
 - **E2** The Agency — PR-byrå med berättelse + pussel
 - **E3** Prompt Odyssey — äventyr i episoder
 
+## Deployed
+
+- **Production:** https://claudegame-pi.vercel.app
+- **GitHub:** https://github.com/jockemedw/claudegame
+- **Stack:** React + Vite + Tailwind CSS, localStorage för progress
+- **Vercel project:** joakimweimar-2195s-projects/claudegame
+
 ## Öppna frågor
 
-- Vilket spelformat (eller kombination) bär hela upplevelsen?
-- Plattform: webb, mobil, desktop?
-- Enspelar eller multiplayer?
+- Plattform: webb (klart), mobil?
+- Backend + autentisering (nästa steg)
+- Fler tips per nivå, fler interaktionstyper
 - Monetisering?
