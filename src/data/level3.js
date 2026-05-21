@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 3,
   title: 'I Direct',
@@ -16,7 +18,8 @@ export default {
         label: 'Role changes everything',
         before: { prompt: 'Review my business plan', note: 'No role' },
         after: { prompt: 'You are a critical venture capitalist who has seen 500 pitches fail. Review my business plan and identify the 3 most likely reasons investors would pass.', note: 'Role + purpose' }
-      }
+      },
+      source: SOURCES.anthropic,
     },
     {
       id: 'l3-t2', type: 'must_know',
@@ -33,13 +36,15 @@ export default {
         type: 'reveal',
         question: 'What is few-shot prompting?',
         answer: 'You give 1–3 examples of the format or style you want, then ask AI to continue the pattern. Example: "Write product descriptions in this style: [your example]. Now write one for: [new product]." AI learns your format instantly.'
-      }
+      },
+      source: SOURCES.anthropic,
     },
     {
       id: 'l3-t4', type: 'must_know',
       title: 'Break complex tasks into steps',
       summary: "Don't ask for a finished essay in one shot. Guide AI through research → outline → draft → revision.",
       steps: ['Identify the phases of your task', 'Prompt AI for one phase at a time', 'Review output before moving to the next phase'],
+      source: SOURCES.cherny,
     },
     {
       id: 'l3-t5', type: 'must_know',

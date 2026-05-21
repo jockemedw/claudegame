@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 4,
   title: 'I Think With AI',
@@ -23,12 +25,14 @@ export default {
       title: 'Manage the context window deliberately',
       summary: "AI's memory is limited to the current conversation. Long chats degrade quality — summarize and restart.",
       steps: ["When a conversation feels stale or off-track, ask AI to summarize what's been decided", 'Start a new chat with that summary as the opening context'],
+      source: SOURCES.karpathy,
     },
     {
       id: 'l4-t3', type: 'must_know',
       title: 'Use Projects for persistent context',
       summary: "Claude's Projects feature lets you define persistent instructions and upload reference documents that stay active across all chats.",
       steps: ['Create a Project for a recurring use case', 'Add instructions and relevant files', "Note how you don't need to re-explain context each time"],
+      source: SOURCES.anthropic,
     },
     {
       id: 'l4-t4', type: 'must_know',

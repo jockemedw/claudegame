@@ -1,19 +1,22 @@
-# claudegame
+# Claude Guide
 
-Ett spel som hjälper och lär spelaren att använda AI (i synnerhet Claude) mer effektivt.
+En interaktiv webbguide som hjälper och lär användaren att använda AI (i synnerhet Claude) mer effektivt.
+
+> **Inriktning:** Projektet utforskade tidigare ett *spelkoncept*, men har **pivoterat från spel till en strukturerad HTML-/webbguide**. Det finns ingen spelmekanik — guiden är ett kurerat, interaktivt referensverk organiserat i nivåer.
 
 ## Projektöversikt
 
-**Målgrupp:** Nybörjare (nivå 1) och vardagsanvändare (nivå 2) — ambitionen är att ta spelaren till nivå 3–4. Nivå 5–6 finns med som aspirerande tak.
+**Målgrupp:** Nybörjare (nivå 1) och vardagsanvändare (nivå 2) — ambitionen är att ta användaren till nivå 3–4. Nivå 5–6 finns med som aspirerande tak.
 
-**Kärnbeslut:**
-- AI-koppling: **Hybrid** — simulerade svar på nivå 1–3 (designkontroll), riktig Claude via API på nivå 4–6 (autenticitet)
-- Spelformat: **Ej beslutat ännu** — pausat efter att nivåramverket etablerades
-- Kvizformat som fristående: **Avfärdat** — kan ingå som hybrid-inslag
+**Format:** Interaktiv webbguide. Innehållet är organiserat i sex nivåer, var och en med kurerade tips uppdelade i "Must Know" och "Nice to Have". Användaren kan markera tips som *vill lära mig* eller *behärskar*, bocka av steg, och följa sina framsteg över tid.
+
+**AI-koppling:** Nuvarande app är en **statisk, kurerad guide** — inga live-AI-anrop. (Den tidigare hybrid-idén med simulerade respektive riktiga Claude-svar hörde till spelkonceptet och är vilande.)
+
+**Designstatus:** Den visuella designen omarbetas separat via **Claude.Design**. Undvik större stil-/layoutändringar i denna kodbas utan avstämning, för att inte krocka med det arbetet.
 
 ## Nivåramverk
 
-Grunden för spelet. Definierar vad spelaren ska lära sig och i vilken ordning.
+Grunden för guiden. Definierar vad användaren ska lära sig och i vilken ordning. Ramverket är etablerat och godkänt. (I appen är själva innehållet författat på engelska; ramverket nedan är på svenska.)
 
 ---
 
@@ -102,23 +105,37 @@ Avgörande skillnad från nivå 2: nivå 2 *reagerar* på output, nivå 3 *desig
 
 ---
 
+## Appens struktur
+
+**Stack:** React 18 + Vite + Tailwind CSS, React Router, localStorage för progress.
+
+**Vyer (`src/pages/`):**
+- `Home.jsx` — landningssida: rubrik, övergripande framstegsindikator (must-knows mastered) och rutnät av nivåkort.
+- `Level.jsx` — en enskild nivå: header med framstegsstapel, sektionerna "Must Know" och "Nice to Have" som listar `TipCard`, samt navigering till nästa nivå.
+- `MyPages.jsx` — personlig dashboard: total progress i procent, nivåvis nedbrytning, "To Master" (kvarvarande must-knows) och "Want to Learn" (bokmärkta tips).
+
+**Innehållsmodell (`src/data/`):**
+- `level1.js`–`level6.js` exporterar var sitt nivåobjekt: `{ id, title, tagline, description, color, hex, tips[] }`.
+- Varje tip: `{ id, type: 'must_know' | 'nice_to_have', title, summary, steps?: string[], example?, source? }`.
+- `example` kan vara `{ type: 'before_after', ... }`, `{ type: 'reveal', question, answer }` eller `{ type: 'slider', ... }`.
+- `sources.js` — källor för attributions-chips (Karpathy, Cherny, Anthropic).
+- `index.js` — samlar nivåerna, exporterar `levels` och `getLevel(id)`.
+
+**Komponenter (`src/components/`):** `Navbar`, `LevelCard`, `TipCard`, `ProgressBar`, `ExampleViewer`, samt interaktiva exempel i `examples/` (`BeforeAfter`, `Reveal`, `Slider`).
+
+**Progress (`src/hooks/useProgress.js`):** localStorage-nyckel `claude-guide-progress`. Status per tip: `none | want_to_learn | mastered`. Steg bockas av individuellt; när alla steg är avklarade sätts tipet automatiskt till `mastered`.
+
 ## Var vi slutade
 
-Nivåramverket är etablerat och godkänt. Nästa steg är att återvända till **spelformatsdiskussionen** med ramverket som grund.
+Projektet har pivoterat från spel till interaktiv webbguide. Nivåramverket och den kurerade tips-strukturen (nivå 1–6, med "Must Know"/"Nice to Have", steg, exempel och källor) är på plats och deployad. Den visuella designen omarbetas parallellt via Claude.Design.
 
-Kandidater för spelformat (diskuterades men inget beslutades):
-- **A1** Prompt Quest — nivåbaserade pusselutmaningar
-- **A2** Fix the Prompt — välj bäst bland alternativ
-- **A3** Prompt Duel — tävla mot AI-motståndare
-- **B1** The New Hire — jobbnarrativ, Claude som kollega
-- **B2** Lost Signal — sci-fi, kommunicera med skadat AI
-- **B3** The Detective — kriminal, ställ rätt frågor
-- **C1** The Workshop — guided labs per koncept
-- **C2** Mission Control — delegera uppgifter, betygsätt effektivitet
-- **C3** AI Atelier — kreativ studio med kvalitetspoäng
-- **E1** Claude Academy — RPG-skola
-- **E2** The Agency — PR-byrå med berättelse + pussel
-- **E3** Prompt Odyssey — äventyr i episoder
+## Öppna frågor
+
+- Plattform: webb (klart), mobil?
+- Backend + autentisering (nästa steg) — kandidat: Supabase
+- Fler tips per nivå, fler interaktionstyper (utöver before/after, reveal, slider)
+- Eventuell live-AI-integration i guiden (öva mot riktig Claude) — i så fall återupplivas hybrid-tanken
+- Monetisering?
 
 ## Deployed
 
@@ -126,10 +143,3 @@ Kandidater för spelformat (diskuterades men inget beslutades):
 - **GitHub:** https://github.com/jockemedw/claudegame
 - **Stack:** React + Vite + Tailwind CSS, localStorage för progress
 - **Vercel project:** joakimweimar-2195s-projects/claudegame
-
-## Öppna frågor
-
-- Plattform: webb (klart), mobil?
-- Backend + autentisering (nästa steg)
-- Fler tips per nivå, fler interaktionstyper
-- Monetisering?
