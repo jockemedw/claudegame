@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 2,
   title: 'I Communicate',
@@ -27,7 +29,8 @@ export default {
         type: 'reveal',
         question: 'What formats can you request?',
         answer: 'Bullet list, numbered list, table, paragraph, markdown, JSON, code block, headers and sections, step-by-step instructions, Q&A format, pros and cons list, executive summary — and many more. Just name it.'
-      }
+      },
+      source: SOURCES.anthropic,
     },
     {
       id: 'l2-t3', type: 'must_know',
@@ -74,7 +77,8 @@ export default {
         label: 'Audience matters',
         before: { prompt: 'Explain APIs', note: 'No audience specified' },
         after: { prompt: 'Explain APIs to a marketing manager with no technical background', note: 'Audience specified' }
-      }
+      },
+      source: SOURCES.anthropic,
     },
     {
       id: 'l2-t8', type: 'nice_to_have',

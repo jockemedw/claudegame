@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 5,
   title: 'I Build With AI',
@@ -26,7 +28,8 @@ const msg = await client.messages.create({
   messages: [{ role: "user", content: "Hello, Claude" }],
 });
 console.log(msg.content[0].text);`
-      }
+      },
+      source: SOURCES.anthropic,
     },
     {
       id: 'l5-t2', type: 'must_know',
@@ -72,6 +75,7 @@ console.log(msg.content[0].text);`
       title: 'Claude Code CLI',
       summary: 'An agentic coding assistant that runs in your terminal, reads your codebase, and makes changes autonomously.',
       steps: ['Install: npm install -g @anthropic-ai/claude-code', 'Run: claude in your project directory', 'Ask it to fix bugs, add features, or explain code'],
+      source: SOURCES.cherny,
     },
     {
       id: 'l5-t10', type: 'nice_to_have',

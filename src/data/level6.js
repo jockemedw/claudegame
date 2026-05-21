@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 6,
   title: 'I Orchestrate AI',
@@ -15,13 +17,15 @@ export default {
         type: 'reveal',
         question: 'Example multi-agent setup',
         answer: 'A research pipeline: Coordinator receives a question → dispatches to Search Agent (finds sources) + Fact-Check Agent (verifies claims) → Synthesis Agent combines results → Editor Agent formats the report. Each agent has a focused system prompt and clear output schema.'
-      }
+      },
+      source: SOURCES.cherny,
     },
     {
       id: 'l6-t2', type: 'must_know',
       title: 'MCP: Model Context Protocol',
       summary: 'MCP lets Claude connect to external systems — databases, APIs, filesystems — through a standardized interface.',
       steps: ['Identify what external system you need Claude to access', 'Find or build an MCP server for it', 'Connect Claude to the MCP server via configuration'],
+      source: SOURCES.anthropic,
     },
     {
       id: 'l6-t3', type: 'must_know',
@@ -44,6 +48,7 @@ export default {
       id: 'l6-t6', type: 'nice_to_have',
       title: 'Parallelization patterns',
       summary: 'Run independent agents in parallel using Promise.all or a queue. Dramatically speeds up complex workflows.',
+      source: SOURCES.cherny,
     },
     {
       id: 'l6-t7', type: 'nice_to_have',
@@ -54,6 +59,7 @@ export default {
       id: 'l6-t8', type: 'nice_to_have',
       title: 'Claude Code as an autonomous agent',
       summary: 'Claude Code can run multi-step coding tasks, execute commands, and push code with minimal human involvement.',
+      source: SOURCES.cherny,
     },
     {
       id: 'l6-t9', type: 'nice_to_have',

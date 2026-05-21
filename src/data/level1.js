@@ -1,3 +1,5 @@
+import { SOURCES } from './sources'
+
 export default {
   id: 1,
   title: 'I Ask',
@@ -23,6 +25,7 @@ export default {
       title: 'AI can be wrong — always verify',
       summary: 'AI states things confidently even when incorrect. Treat it like a smart but fallible colleague.',
       steps: ['Ask AI to explain its reasoning', 'Cross-check factual claims with a reliable source'],
+      source: SOURCES.karpathy,
     },
     {
       id: 'l1-t3', type: 'must_know',
@@ -33,7 +36,8 @@ export default {
         type: 'reveal',
         question: "What happens if you ask Claude about last week's news?",
         answer: "Claude will either say it doesn't know, make an educated guess, or — if it has web search — look it up. Always check the date on the information you receive."
-      }
+      },
+      source: SOURCES.karpathy,
     },
     {
       id: 'l1-t4', type: 'must_know',
@@ -98,6 +102,7 @@ export default {
       id: 'l1-t12', type: 'nice_to_have',
       title: "AI doesn't remember between conversations",
       summary: "Each new chat is a blank slate. You need to re-share context each time (unless using Projects).",
+      source: SOURCES.karpathy,
     },
     {
       id: 'l1-t13', type: 'nice_to_have',

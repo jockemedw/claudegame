@@ -100,6 +100,20 @@ export default function TipCard({ tip, accentColor }) {
         </div>
       </button>
 
+      {/* Source attribution — outside the button to keep valid HTML */}
+      {tip.source && (
+        <div className="px-4 pb-3 -mt-2 pl-9">
+          <a
+            href={tip.source.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors underline decoration-dotted underline-offset-2"
+          >
+            <span className="text-gray-700 no-underline">Källa:</span> {tip.source.name}
+          </a>
+        </div>
+      )}
+
       {/* Expanded content */}
       {open && (
         <div className="border-t border-gray-800 animate-fade-in">
