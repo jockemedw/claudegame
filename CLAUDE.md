@@ -1,4 +1,4 @@
-# claudegame
+# Claude Guide
 
 Ett spel som hjälper och lär spelaren att använda AI (i synnerhet Claude) mer effektivt.
 
