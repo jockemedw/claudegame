@@ -1,42 +1,39 @@
-const KEY = 'claude-guide-progress'
+import { useState, useEffect } from 'react';
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(KEY)) || {} } catch { return {} }
-}
+export default function useProgress() {
+  const [state, setState] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('cg.progress') || '{}'); }
+    catch { return {}; }
+  });
 
-function save(data) {
-  localStorage.setItem(KEY, JSON.stringify(data))
-}
+  useEffect(() => {
+    function onStorage(e) {
+      if (e.key === 'cg.progress') {
+        try { setState(JSON.parse(e.newValue || '{}')); } catch {}
+      }
+    }
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
 
-export function getStatus(tipId) {
-  return load()[tipId]?.status || 'none'
-}
+  const update = (tipId, patch) => {
+    setState(prev => {
+      const next = { ...prev, [tipId]: { ...(prev[tipId] || {}), ...patch } };
+      try { localStorage.setItem('cg.progress', JSON.stringify(next)); } catch {}
+      window.dispatchEvent(new CustomEvent('cg.progress.changed', { detail: next }));
+      return next;
+    });
+  };
 
-export function setStatus(tipId, status) {
-  const data = load()
-  data[tipId] = { ...data[tipId], status }
-  save(data)
-}
+  const clear = (tipId) => {
+    setState(prev => {
+      const next = { ...prev };
+      delete next[tipId];
+      try { localStorage.setItem('cg.progress', JSON.stringify(next)); } catch {}
+      window.dispatchEvent(new CustomEvent('cg.progress.changed', { detail: next }));
+      return next;
+    });
+  };
 
-export function getStepsDone(tipId, totalSteps) {
-  const steps = load()[tipId]?.steps
-  if (!steps) return new Array(totalSteps).fill(false)
-  return steps
-}
-
-export function setStepDone(tipId, stepIndex, done, totalSteps) {
-  const data = load()
-  const steps = data[tipId]?.steps || new Array(totalSteps).fill(false)
-  steps[stepIndex] = done
-  const allDone = steps.every(Boolean)
-  data[tipId] = { ...data[tipId], steps, status: allDone ? 'mastered' : data[tipId]?.status || 'none' }
-  save(data)
-}
-
-export function getAllProgress() {
-  return load()
-}
-
-export function clearAll() {
-  localStorage.removeItem(KEY)
+  return [state, update, clear];
 }
